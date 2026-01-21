@@ -1,7 +1,5 @@
 
-
-export default function Agent() {
-
+export function Agent() {
     return (
         <div>
             <h1>Agent</h1>

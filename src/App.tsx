@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme"
 import NotFound from "@/page/404"
-import Dashboard from "@/page/dashboard"
+import { Dashboard } from "@/page/dashboard"
 import { Route, Switch } from "wouter"
 
 function App() {
