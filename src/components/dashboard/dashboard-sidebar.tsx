@@ -7,12 +7,16 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { useTranslation } from "react-i18next"
 
 interface DashboardSidebarProps {
     children?: React.ReactNode
 }
 
 export function DashboardSidebar({ children }: DashboardSidebarProps) {
+
+    const { t } = useTranslation()
+
     return (
         <SidebarProvider>
             <Sidebar collapsible="icon" variant="inset">
@@ -36,7 +40,9 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator className="hidden md:block" />
                                 <BreadcrumbItem>
-                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                    <BreadcrumbPage>
+                                        {t('dashboard.agent')}
+                                    </BreadcrumbPage>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
                         </Breadcrumb>
