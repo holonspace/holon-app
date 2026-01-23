@@ -7,7 +7,6 @@
 
 :root {
   color-scheme: light dark;
-
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -130,4 +129,14 @@
   html {
     @apply font-sans;
   }
+
+  /* * 修正 1Password 擴充功能在深色模式下的顯示錯誤。
+  * 當主題使用 oklch 顏色格式時，1Password 可能無法正確偵測深色背景，
+  * 此處透過強制設定 box-shadow 來覆蓋自動填充後的輸入框背景色，以確保視覺一致性。
+  * 參考：https://www.1password.community/discussions/developers/1pw-extension-bug-autofill-theme-detection-fails-when-using-oklch-color-scheme/161487
+  */
+  .dark input[data-com-onepassword-filled] {
+    box-shadow: 0 0 0px 1000px rgb(36, 107, 179) inset !important;
+  }
+
 }
