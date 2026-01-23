@@ -1,7 +1,7 @@
 
-export const SUPPORTED_LANGUAGES = ["en", "zh-Hant", "zh-Hans", "zh-TW", "zh-CN", "zh-HK", "zh-MO", "zh-SG"] as const
+export const SUPPORTED_LANGUAGES = ["en", "zh-Hant", "zh-Hans"] as const
 export const LANGUAGE_COOKIE_NAME = "i18n_lang"
-export const NAMESPACES = ["translation", "auth"] as const
+export const NAMESPACES = ["translation", "language"] as const
 
 // 語言回退映射
 export const FALLBACK_LANGUAGES: Record<string, string[]> = {
