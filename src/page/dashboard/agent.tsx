@@ -1,5 +1,5 @@
 
-export function Agent() {
+export function AgentPage() {
     return (
         <div>
             <h1>Agent</h1>

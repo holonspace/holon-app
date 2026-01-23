@@ -1,8 +1,8 @@
 import { DashboardSidebar, DashboardLayout } from "@/components/dashboard"
-import { Agent } from "@/page/dashboard"
+import { AgentPage } from "@/page/dashboard"
 import { Route, Router } from "wouter"
 
-export function Dashboard() {
+export function DashboardPage() {
     return (
         <>
             <DashboardSidebar>
@@ -12,11 +12,11 @@ export function Dashboard() {
                         <div className="bg-muted/50 aspect-video" />
                         <div className="bg-muted/50 aspect-video" />
                     </div>
-                    <div className="bg-muted/50 min-h-[100vh] flex-1 md:min-h-min" />
+                    <div className="bg-muted/50 min-h-screen flex-1 md:min-h-min" />
                 </DashboardLayout>
             </DashboardSidebar>
             <Router base="/dashboard">
-                <Route path="/agent" component={Agent} />
+                <Route path="/agent" component={AgentPage} />
             </Router>
         </>
     )
