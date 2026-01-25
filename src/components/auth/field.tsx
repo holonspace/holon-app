@@ -1,6 +1,48 @@
+import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { Button } from "@/components/ui/button"
-import { Field } from "@/components/ui/field"
+import { Field, FieldLabel, FieldDescription, FieldError, FieldSeparator } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+
+type InputProps = React.ComponentProps<typeof Input>
+
+interface InputFieldProps<T extends FieldValues> extends Omit<InputProps, "name"> {
+    name: Path<T>
+    register: UseFormRegister<T>
+    errors?: FieldErrors<T>
+    label: string
+    labelExtra?: React.ReactNode
+}
+
+export function InputField<T extends FieldValues>({
+    name,
+    register,
+    errors,
+    label,
+    className,
+    labelExtra,
+    ...props
+}: InputFieldProps<T>) {
+    const { t } = useTranslation("auth")
+    const error = errors?.[name]
+
+    return (
+        <Field className={className} data-invalid={!!error || undefined}>
+            <div className="flex items-center text-sm">
+                <FieldLabel htmlFor={name}>{label}</FieldLabel>
+                {labelExtra}
+            </div>
+            <Input
+                id={name}
+                {...props}
+                {...register(name)}
+            />
+            {error?.message && (
+                <FieldError>{t(error.message as string)}</FieldError>
+            )}
+        </Field>
+    )
+}
 
 export function OAuth2Field() {
     const { t } = useTranslation("auth")
@@ -17,5 +59,15 @@ export function OAuth2Field() {
                 {t("oauth.google")}
             </Button>
         </Field>
+    )
+}
+
+export function OauthSeparator() {
+    const { t } = useTranslation("auth")
+
+    return (
+        <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card h-8  flex items-center justify-center">
+            {t("oauth.separator")}
+        </FieldSeparator>
     )
 }

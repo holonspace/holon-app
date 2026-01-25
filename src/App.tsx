@@ -1,19 +1,20 @@
 import { ThemeProvider } from "@/components/theme"
 import i18n from "@/i18n"
 import NotFound from "@/page/404"
-import { AuthRoute } from "@/page/auth"
+import { SignInPage, SignUpPage } from "@/page/auth"
 import { DashboardPage } from "@/page/dashboard"
 import { I18nextProvider } from "react-i18next"
 import { Route, Switch } from "wouter"
 
-function App() {
 
+function App() {
     return (
         <ThemeProvider>
             <I18nextProvider i18n={i18n}>
                 <Switch>
                     <Route path="/dashboard" component={DashboardPage} />
-                    <AuthRoute />
+                    <Route path="/signin" component={SignInPage} />
+                    <Route path="/signup" component={SignUpPage} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </I18nextProvider>
