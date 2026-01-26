@@ -1,8 +1,8 @@
+import { Button } from "@/components/ui/button"
+import { Field, FieldError, FieldLabel, FieldSeparator } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
 import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldDescription, FieldError, FieldSeparator } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
 
 type InputProps = React.ComponentProps<typeof Input>
 

@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslation } from "react-i18next"
-import { OAuth2Field, InputField, OauthSeparator } from "@/components/auth"
+import { InputField, OAuth2Field, OauthSeparator } from "@/components/auth"
 import { signUpSchema, type SignUpFormData } from "@/components/auth/schema"
 import { Button } from "@/components/ui/button"
-import { FieldGroup, FieldSeparator, Field, FieldDescription } from "@/components/ui/field"
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { Link } from "wouter"
 
 
