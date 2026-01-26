@@ -1,9 +1,12 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "@/components/ui/input-group"
+import { cn } from "@/lib/utils"
 import {
     ArrowUpIcon,
     BookOpenIcon,
+    ChevronsDownUp,
+    ChevronsUpDown,
     GlobeIcon,
     MoreHorizontalIcon,
     MousePointerIcon,
@@ -15,11 +18,25 @@ import {
     SparklesIcon,
     WandIcon
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 
 export function ChatForm() {
     const [dictateEnabled, setDictateEnabled] = useState(false)
+    const [content, setContent] = useState("")
+    const [isOverflowing, setIsOverflowing] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+
+    const contentRef = useRef<HTMLTextAreaElement>(null)
+
+    useEffect(() => {
+        const el = contentRef.current
+        if (el) {
+            setIsOverflowing(el.scrollHeight > el.clientHeight)
+        }
+    }, [contentRef, content])
+
+    const handleOpen = () => setIsOpen(!isOpen)
 
     return (
         <Field>
@@ -27,12 +44,19 @@ export function ChatForm() {
                 Prompt
             </FieldLabel>
             <InputGroup>
-                <InputGroupTextarea id="prompt" placeholder="Ask anything" className="textbase md:text-base p-4" />
-                <InputGroupAddon align="block-end">
+                <InputGroupTextarea
+                    id="prompt"
+                    placeholder="Ask anything"
+                    className={cn("textbase md:text-base my-4 px-4 overflow-y-auto scrollbar-thin transition-all duration-200", isOpen ? "max-h-[60dvh]" : "max-h-[200px]")}
+                    ref={contentRef}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
+                <InputGroupAddon align="block-end" className="flex items-center justify-between">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <InputGroupButton
-                                variant="ghost"
+                                variant="secondary"
                                 size="icon-sm"
                                 onClick={() => setDictateEnabled(!dictateEnabled)}
                                 className="rounded-4xl"
@@ -90,23 +114,20 @@ export function ChatForm() {
                             </DropdownMenuSub>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    {/* <Tooltip>
-                        <TooltipTrigger asChild>
-                            <InputGroupButton
-                                variant="ghost"
-                                size="icon-sm"
-                                onClick={() => setDictateEnabled(!dictateEnabled)}
-                                className="ml-auto rounded-4xl"
-                            >
-                                <AudioLinesIcon className="size-4" />
-                            </InputGroupButton>
-                        </TooltipTrigger>
-                        <TooltipContent>Dictate</TooltipContent>
-                    </Tooltip> */}
+                    {isOverflowing && (
+                        <InputGroupButton
+                            size="icon-sm"
+                            variant="ghost"
+                            className="ml-auto rounded-4xl"
+                            onClick={handleOpen}
+                        >
+                            {isOpen ? <ChevronsDownUp /> : <ChevronsUpDown />}
+                        </InputGroupButton>
+                    )}
                     <InputGroupButton
                         size="icon-sm"
                         variant="default"
-                        className="ml-auto rounded-4xl"
+                        className="rounded-4xl"
                     >
                         <ArrowUpIcon />
                     </InputGroupButton>
