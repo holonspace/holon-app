@@ -62,12 +62,13 @@ export function OAuth2Field() {
     )
 }
 
-export function OauthSeparator() {
-    const { t } = useTranslation("auth")
-
+interface AuthSeparatorProps {
+    children?: React.ReactNode   
+}
+export function AuthSeparator({ children }: AuthSeparatorProps) {
     return (
         <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card h-8  flex items-center justify-center">
-            {t("oauth.separator")}
+           {children}
         </FieldSeparator>
     )
 }

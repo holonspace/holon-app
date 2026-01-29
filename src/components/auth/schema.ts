@@ -4,7 +4,7 @@ export const emailSchema = z.object({
     email: z.email({ message: "error.email.invalid" })
 })
 
-export const signinSchema = emailSchema.extend({
+export const signInSchema = emailSchema.extend({
     password: z.string().min(8, { message: "error.password.min" })
 })
 
@@ -17,5 +17,5 @@ export const signUpSchema = emailSchema.extend({
 })
 
 export type EmailFormData = z.infer<typeof emailSchema>
-export type SignInFormData = z.infer<typeof signinSchema>
+export type SignInFormData = z.infer<typeof signInSchema>
 export type SignUpFormData = z.infer<typeof signUpSchema>

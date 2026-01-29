@@ -1,4 +1,4 @@
-import { InputField, OAuth2Field, OauthSeparator } from "@/components/auth"
+import { AuthSeparator, InputField, OAuth2Field } from "@/components/auth"
 import { signUpSchema, type SignUpFormData } from "@/components/auth/schema"
 import { Button } from "@/components/ui/button"
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field"
@@ -64,7 +64,9 @@ export function SignUpForm() {
                 <Field>
                     <Button type="submit">{t("signup.submit")}</Button>
                 </Field>
-                <OauthSeparator />
+                <AuthSeparator>
+                    {t("oauth.separator")}
+                </AuthSeparator>
                 <OAuth2Field />
                 <FieldDescription className="text-center">
                     {t("signup.hasAccount")} <Link href="/signin">{t("signup.signInLink")}</Link>

@@ -1,13 +1,15 @@
-import { InputField, OAuth2Field, OauthSeparator } from "@/components/auth"
+import { AuthSeparator, InputField, OAuth2Field } from "@/components/auth"
 import { emailSchema, type EmailFormData } from "@/components/auth/schema"
 import { Button } from "@/components/ui/button"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { useLocation } from "wouter"
 
 
 export function SignInForm() {
+    const [_, setLocation] = useLocation();
     const { t } = useTranslation("auth")
     const {
         register,
@@ -19,6 +21,7 @@ export function SignInForm() {
 
     const onSubmit = (data: EmailFormData) => {
         console.log("Login form submitted:", data)
+        setLocation(`/auth/verify?email=${data.email}`)
     }
 
     return (
@@ -42,7 +45,9 @@ export function SignInForm() {
                 <Field>
                     <Button type="submit">{t("signin.submit")}</Button>
                 </Field>
-                <OauthSeparator />
+                <AuthSeparator >
+                    {t("oauth.separator")}
+                </AuthSeparator>
                 <OAuth2Field />
             </FieldGroup>
         </form>

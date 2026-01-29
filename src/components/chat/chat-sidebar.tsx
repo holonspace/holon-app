@@ -25,7 +25,6 @@ import {
     CreditCard,
     Link,
     LogOut,
-    MessagesSquare,
     MoreHorizontal,
     PanelLeftIcon,
     Search,
@@ -136,14 +135,6 @@ function ChatSidebarNav() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 ))}
-                <SidebarMenuItem>
-                    <SidebarMenuButton
-                        collapsedStyle='hidden'
-                        className="max-w-0 max-h-0 size-9 overflow-hidden opacity-0 p-0 transition-opacity duration-200 group-data-[collapsible=icon]:max-w-9 group-data-[collapsible=icon]:max-h-9 group-data-[collapsible=icon]:opacity-100 group-data-[collapsible=icon]:p-2"
-                    >
-                        <MessagesSquare className="size-5!" />
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
             </SidebarMenu>
         </SidebarGroup>
     )
