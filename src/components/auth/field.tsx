@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Field, FieldError, FieldLabel, FieldSeparator } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { LoaderCircle } from "lucide-react"
 import type { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -69,5 +70,20 @@ export function OauthSeparator() {
         <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card h-8  flex items-center justify-center">
             {t("oauth.separator")}
         </FieldSeparator>
+    )
+}
+
+
+
+export function SubmitButton({ children, loading = false, ...props }: React.ComponentProps<typeof Button> & { loading?: boolean }) {
+    return (
+        <Field>
+            <Button type="submit" disabled={loading} {...props}>
+                {loading ?
+                    <LoaderCircle className="animate-spin size-5" />
+                    : children
+                }
+            </Button>
+        </Field>
     )
 }

@@ -1,13 +1,19 @@
 import { z } from "zod/v4"
 
-export const loginSchema = z.object({
-    email: z.email({ message: "error.email.invalid" }),
-    password: z.string().min(8, { message: "error.password.min" })
-})
+export const emailSchema = z
+    .object({
+        email: z.email({ message: "error.email.invalid" })
+    })
+
+export const signInSchema = z
+    .object({
+        ...emailSchema.shape,
+        password: z.string().min(8, { message: "error.password.min" })
+    })
 
 export const signUpSchema = z
     .object({
-        email: z.email({ message: "error.email.invalid" }),
+        ...emailSchema.shape,
         password: z.string().min(8, { message: "error.password.min" }),
         confirmPassword: z.string().min(1, { message: "error.confirmPassword.required" })
     })
@@ -16,5 +22,13 @@ export const signUpSchema = z
         path: ["confirmPassword"]
     })
 
-export type LoginFormData = z.infer<typeof loginSchema>
+
+export const otpSchema = z.object({
+    ...emailSchema.shape,
+    otp: z.string().length(6, { message: "error.otp.length" })
+})
+
+export type EmailFormData = z.infer<typeof emailSchema>
+export type SignInFormData = z.infer<typeof signInSchema>
 export type SignUpFormData = z.infer<typeof signUpSchema>
+export type OtpFormData = z.infer<typeof otpSchema>

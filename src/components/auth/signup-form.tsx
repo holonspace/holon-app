@@ -67,7 +67,7 @@ export function SignUpForm() {
                 <OauthSeparator />
                 <OAuth2Field />
                 <FieldDescription className="text-center">
-                    {t("signup.hasAccount")} <Link href="/signin">{t("signup.signInLink")}</Link>
+                    {t("signup.hasAccount")} <Link href="/auth/signin">{t("signup.signInLink")}</Link>
                 </FieldDescription>
             </FieldGroup>
         </form>
