@@ -1,4 +1,5 @@
 
+import { ProtectedRoute } from "@/components/route"
 import { ThemeProvider } from "@/components/theme"
 import i18n from "@/i18n"
 import NotFound from "@/page/404"
@@ -27,7 +28,7 @@ function App() {
                         <Route path="/dashboard" component={DashboardPage} />
                         <Route path="/(signin|signup)" component={AuthPage} />
                         <Route path="/otp" component={OTPPage} />
-                        <Route path="/onboarding" component={OnBoardingPage} />
+                        <ProtectedRoute path="/onboarding" component={OnBoardingPage} />
                         <Route path="/chat" component={ChatPage} />
                         <Route path="*" component={NotFound} />
                     </Switch>
