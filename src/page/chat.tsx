@@ -1,26 +1,19 @@
+import { AuthMenu } from "@/components/auth"
 import { ChatForm, ChatMessage, ChatModelSelector } from "@/components/chat"
 import { ChatSidebar } from "@/components/chat/chat-sidebar"
 import { Button } from "@/components/ui/button"
+import { useAuth } from "@/lib/auth"
 import "@/styles/streamdown.css"
 import { LayoutDashboard } from "lucide-react"
 import { Link } from "wouter"
 import myDoc from './witty-cooking-wreath.md?raw'
 
 export default function ChatPage() {
-
     return (
         <ChatSidebar className="min-h-screen flex flex-col [--chat-content-max-width:768px]">
             <header className="sticky top-0 flex h-14 shrink-0 items-center justify-between gap-2 pr-4 md:pl-4 pl-12 bg-background 2xl:bg-transparent z-2">
                 <ChatModelSelector />
-                <Link to="/dashboard">
-                    <Button
-                        variant="ghost"
-                        className="h-10 text-muted-foreground"
-                    >
-                        <LayoutDashboard className="size-5" />
-                        Dashboard
-                    </Button>
-                </Link>
+                <RightSideMenu />
             </header>
             <div className="flex-1 flex flex-col mx-4">
                 <div className="flex-1">
@@ -36,5 +29,33 @@ export default function ChatPage() {
                 </div>
             </div>
         </ChatSidebar >
+    )
+}
+
+function MenuButton(props: React.ComponentProps<typeof Button>) {
+    return (
+        <Button variant="ghost" className="h-10 text-muted-foreground" {...props} />
+    )
+}
+
+function RightSideMenu() {
+    const { status } = useAuth()
+
+    if (status === "loading") return null
+    if (status === "unauthenticated") return (
+        <Link to="/signin">
+            <MenuButton>Sign In / Sign Up</MenuButton>
+        </Link>
+    )
+    return (
+        <div className="flex items-center gap-2">
+            <Link to="/dashboard">
+                <MenuButton>
+                    <LayoutDashboard className="size-5" />
+                    Dashboard
+                </MenuButton>
+            </Link>
+            <AuthMenu />
+        </div>
     )
 }

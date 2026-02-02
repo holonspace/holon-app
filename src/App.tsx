@@ -21,7 +21,6 @@ function App() {
     return (
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
-                {/* <LanguageSelector/> */}
                 <Switch>
                     <Route path="/dashboard" component={DashboardPage} />
                     <Route path="/(signin|signup)" component={AuthPage} />

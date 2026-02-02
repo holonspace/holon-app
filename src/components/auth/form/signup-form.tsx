@@ -1,5 +1,5 @@
-import { InputField, OAuth2Field, Separator } from "@/components/auth"
-import { signUpSchema, type SignUpFormData } from "@/components/auth/schema"
+import { InputField, OAuth2Field, Separator } from "@/components/auth/form"
+import { signUpSchema, type SignUpFormData } from "@/components/auth/form/schema"
 import { Button } from "@/components/ui/button"
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field"
 import { zodResolver } from "@hookform/resolvers/zod"

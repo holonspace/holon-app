@@ -1,5 +1,5 @@
-import { otpSchema, SubmitButton, type OtpFormData } from "@/components/auth"
-import { useOTP } from "@/components/auth/hook"
+import { otpSchema, SubmitButton, type OtpFormData } from "@/components/auth/form"
+import { useOTP } from "@/components/auth/form/hook"
 import { Loading } from "@/components/loading"
 import { Button } from "@/components/ui/button"
 import {

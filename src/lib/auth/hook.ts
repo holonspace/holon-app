@@ -9,6 +9,7 @@ interface UseAuthResult {
     session: Session | null
     status: "loading" | "authenticated" | "unauthenticated"
     updateUser: (data: UpdateUser) => Promise<ReturnType<typeof authClient.updateUser>>
+    signOut: () => Promise<ReturnType<typeof authClient.signOut>>
 }
 
 export const useAuth = (): UseAuthResult => {
@@ -20,6 +21,8 @@ export const useAuth = (): UseAuthResult => {
         return "unauthenticated"
     }, [session, isPending])
 
-    return { session: session, status, updateUser: authClient.updateUser }
+    const signOut = async () => authClient.signOut()
+
+    return { session: session, status, updateUser: authClient.updateUser, signOut }
 }
 

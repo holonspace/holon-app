@@ -1,4 +1,4 @@
-import { OTPForm } from "@/components/auth"
+import { OTPForm } from "@/components/auth/form"
 
 export default function OTPPage() {
     return (

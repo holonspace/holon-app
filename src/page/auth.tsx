@@ -1,4 +1,4 @@
-import { SignInForm, SignUpForm } from '@/components/auth'
+import { SignInForm, SignUpForm } from '@/components/auth/form'
 import { Card, CardContent } from '@/components/ui/card'
 import { FieldDescription } from '@/components/ui/field'
 import { Route, Switch } from 'wouter'
