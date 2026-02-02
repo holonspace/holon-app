@@ -26,12 +26,16 @@ const checkEmail = async (args: Parameters<typeof authClient.checkEmail>[0]) => 
 
 const emailCooldown = async (args: Parameters<typeof authClient.emailCooldown>[0]) => handleAuth(authClient.emailCooldown(args))
 
+const password = {
+    reset: async (args: Parameters<typeof authClient.resetPassword>[0]) => handleAuth(authClient.resetPassword(args))
+}
 
 const authApi = {
     signIn,
     emailOtp,
     checkEmail,
-    emailCooldown
+    emailCooldown,
+    password
 }
 
 export default authApi

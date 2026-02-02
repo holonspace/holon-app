@@ -1,4 +1,4 @@
-import { InputField, SubmitButton } from "@/components/auth"
+import { InputField, OAuth2Field, Separator, SubmitButton } from "@/components/auth"
 import { useOTP } from "@/components/auth/hook"
 import { emailSchema, type EmailFormData } from "@/components/auth/schema"
 import type { StepProps } from "@/components/auth/steps/types"
@@ -31,15 +31,19 @@ export function EmailStep({ email }: StepProps) {
         try {
             const data = await authApi.checkEmail({ email })
             switch (data?.code) {
-                case "USER_NOT_FOUND":
-                    navigateTo({ path: "/signup", params: { email } })
-                    return
+                // case "USER_NOT_FOUND":
+                //     navigateTo({ path: "/signup", params: { email } })
+                //     return
 
                 case "REQUEST_PASSWORD":
                     navigateTo({ params: { step: "credential", email } })
                     return
 
-                case "REQUEST_EMAIL_VERIFICATION":
+                // case "REQUEST_EMAIL_VERIFICATION":
+                //     navigateToOTP(email)
+                //     return
+
+                default:
                     navigateToOTP(email)
                     return
             }
@@ -51,21 +55,25 @@ export function EmailStep({ email }: StepProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <FieldGroup>
-                <InputField<EmailFormData>
-                    name="email"
-                    register={register}
-                    errors={errors}
-                    label="Email"
-                    type="email"
-                    placeholder="m@example.com"
-                    autoComplete="email"
-                />
-                <SubmitButton loading={loading}>
-                    signin
-                </SubmitButton>
-            </FieldGroup>
-        </form >
+        <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <FieldGroup>
+                    <InputField<EmailFormData>
+                        name="email"
+                        register={register}
+                        errors={errors}
+                        label="Email"
+                        type="email"
+                        placeholder="m@example.com"
+                        autoComplete="email"
+                    />
+                    <SubmitButton loading={loading}>
+                        signin
+                    </SubmitButton>
+                </FieldGroup>
+            </form >
+            <Separator />
+            <OAuth2Field />
+        </>
     )
 }

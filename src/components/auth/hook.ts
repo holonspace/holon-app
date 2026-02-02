@@ -31,16 +31,15 @@ export const useOTP = () => {
         try {
             if (countdown > 0) return
             setLoading(true)
-
             await authApi.emailOtp.sendVerificationOtp({
                 email,
                 type: "sign-in",
-                fetchOptions: {
-                    onSuccess: async () => {
-                        setCountdown(60)
-                    }
-                },
             })
+            setCountdown(60)
+        } catch (error: any) {
+            if (error?.status === 429 && typeof error?.cooldown === 'number') {
+                setCountdown(error.cooldown)
+            }
         } finally {
             setAutoSend(false)
             setLoading(false)

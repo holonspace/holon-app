@@ -30,7 +30,7 @@ import { useSearchParams } from "wouter"
 export function OTPForm() {
 
     const otpRef = useRef<HTMLInputElement>(null)
-
+    
     const { setLocation } = useNavigate()
     const [searchParams] = useSearchParams()
     const email = searchParams.get("email")
@@ -122,6 +122,10 @@ export function OTPForm() {
                                                 data-1p-ignore
                                                 autoFocus
                                                 maxLength={6}
+                                                onComplete={() => {
+                                                    clearErrors('otp')
+                                                    handleSubmit((data) => mutate(data))()
+                                                }}
                                                 onChange={(value) => {
                                                     clearErrors('otp')
                                                     onChange(value)
@@ -172,7 +176,7 @@ function ResendButton({ email, onClick }: { email: string, onClick?: () => void 
                 sendOTP(email)
             } else {
                 authApi.emailCooldown({ email })
-                    .then(({ error }: any) => {
+                    .catch((error) => {
                         if (error?.status === 429 && typeof error?.cooldown === 'number') {
                             setCountdown(error.cooldown)
                         }

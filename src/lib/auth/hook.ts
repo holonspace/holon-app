@@ -1,6 +1,6 @@
 
 import { authClient, type Session } from "@/lib/auth"
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 
 
 type UpdateUser = Partial<Omit<Session['user'], 'id' | 'createdAt' | 'updatedAt' | 'email' | 'emailVerified'>>
@@ -8,7 +8,7 @@ type UpdateUser = Partial<Omit<Session['user'], 'id' | 'createdAt' | 'updatedAt'
 interface UseAuthResult {
     session: Session | null
     status: "loading" | "authenticated" | "unauthenticated"
-    updateUser: (data: UpdateUser) => ReturnType<typeof authClient.updateUser>
+    updateUser: (data: UpdateUser) => Promise<ReturnType<typeof authClient.updateUser>>
 }
 
 export const useAuth = (): UseAuthResult => {
@@ -20,8 +20,6 @@ export const useAuth = (): UseAuthResult => {
         return "unauthenticated"
     }, [session, isPending])
 
-    const updateUser = useCallback((data: UpdateUser) => authClient.updateUser(data), [authClient])
-
-    return { session: session, status, updateUser }
+    return { session: session, status, updateUser: authClient.updateUser }
 }
 

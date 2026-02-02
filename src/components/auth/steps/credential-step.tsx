@@ -1,19 +1,22 @@
-import { InputField, signInSchema, SubmitButton, type SignInFormData } from "@/components/auth"
+import { InputField, Separator, signInSchema, SubmitButton, type SignInFormData } from "@/components/auth"
+import { useOTP } from "@/components/auth/hook"
 import type { StepProps } from "@/components/auth/steps/types"
-import { FieldGroup } from "@/components/ui/field"
+import { Button } from "@/components/ui/button"
+import { Field, FieldGroup } from "@/components/ui/field"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Mail } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 export function CredentialStep({ email }: StepProps) {
-
+    const { navigateToOTP } = useOTP()
     const [loading, setLoading] = useState(false)
     const { t } = useTranslation("auth")
     const {
+        trigger,
         register,
         handleSubmit,
-        setError,
         formState: { errors }
     } = useForm<SignInFormData>({
         resolver: zodResolver(signInSchema),
@@ -49,31 +52,47 @@ export function CredentialStep({ email }: StepProps) {
         }
     }
 
+    const handleEmailLogin = async () => {
+        const result = await trigger("email")
+        if (result) {
+            navigateToOTP(email!)
+        }
+    }
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <FieldGroup>
-                <InputField<SignInFormData>
-                    name="email"
-                    register={register}
-                    errors={errors}
-                    label={t("field.email")}
-                    type="email"
-                    placeholder={t("field.emailPlaceholder")}
-                    autoComplete="email"
-                />
-                <InputField<SignInFormData>
-                    name="password"
-                    register={register}
-                    errors={errors}
-                    label={t("field.password")}
-                    type="password"
-                    autoComplete="current-password"
-                    autoFocus
-                />
-                <SubmitButton loading={loading}>
-                    credential
-                </SubmitButton>
-            </FieldGroup>
-        </form>
+        <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <FieldGroup>
+                    <InputField<SignInFormData>
+                        name="email"
+                        register={register}
+                        errors={errors}
+                        label={t("field.email")}
+                        type="email"
+                        placeholder={t("field.emailPlaceholder")}
+                        autoComplete="email"
+                    />
+                    <InputField<SignInFormData>
+                        name="password"
+                        register={register}
+                        errors={errors}
+                        label={t("field.password")}
+                        type="password"
+                        autoComplete="current-password"
+                        autoFocus
+                    />
+                    <SubmitButton loading={loading}>
+                        credential
+                    </SubmitButton>
+                </FieldGroup>
+            </form>
+            <Separator />
+            <Field>
+                <Button variant="outline" type="button" onClick={handleEmailLogin}>
+                    <Mail />
+                    使用驗證碼登入
+                </Button>
+            </Field>
+        </>
     )
 }

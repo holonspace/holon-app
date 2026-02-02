@@ -26,7 +26,6 @@ export function InputField<T extends FieldValues>({
 }: InputFieldProps<T>) {
     const { t } = useTranslation("auth")
     const error = errors?.[name]
-
     return (
         <Field className={className} data-invalid={!!error || undefined}>
             <div className="flex items-center text-sm">
@@ -45,9 +44,42 @@ export function InputField<T extends FieldValues>({
     )
 }
 
+interface PasswordFieldProps<T extends FieldValues> extends Omit<InputProps, "name"> {
+    name?: string
+    register: UseFormRegister<T>
+    error?: FieldErrors<T>[Path<T>] | undefined
+    label: string
+    children?: React.ReactNode
+}
+
+export function PasswordField<T extends FieldValues>({
+    name = 'password',
+    register,
+    error,
+    label,
+    className,
+    children,
+    ...props
+}: PasswordFieldProps<T>) {
+    const { t } = useTranslation("auth")
+    return (
+        <Field className={className} data-invalid={!!error || undefined}>
+            <FieldLabel htmlFor={name}>{label}</FieldLabel>
+            <Input
+                id={name}
+                {...props}
+                {...register(name as any)}
+            />
+            {error?.message && (
+                <FieldError>{t(error.message as string)}</FieldError>
+            )}
+            {children}
+        </Field>
+    )
+}
+
 export function OAuth2Field() {
     const { t } = useTranslation("auth")
-
     return (
         <Field>
             <Button variant="outline" type="button">
@@ -63,7 +95,7 @@ export function OAuth2Field() {
     )
 }
 
-export function OauthSeparator() {
+export function Separator() {
     const { t } = useTranslation("auth")
 
     return (
