@@ -15,6 +15,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarProvider,
+    SidebarRail,
     SidebarTrigger
 } from "@/components/ui/sidebar"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -106,6 +107,7 @@ export function ChatSidebar(props: React.ComponentProps<typeof SidebarInset>) {
                 <SidebarFooter>
                     <ChatSidebarFooter />
                 </SidebarFooter>
+                <SidebarRail />
             </Sidebar>
             <SidebarInset {...props} />
         </SidebarProvider >

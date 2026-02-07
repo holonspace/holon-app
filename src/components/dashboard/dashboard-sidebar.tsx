@@ -8,7 +8,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar"
 import { useLocalStorage } from "@uidotdev/usehooks"
 import { ChevronsUpDown } from "lucide-react"
 import React from "react"
@@ -49,6 +49,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarFooter>
+                <SidebarRail/>
             </Sidebar>
             <SidebarInset className="md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-0!">
                 <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border/50">
