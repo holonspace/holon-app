@@ -8,6 +8,7 @@ import {
     SidebarGroup,
     SidebarGroupLabel,
     SidebarMenu,
+    SidebarMenuAction,
     SidebarMenuItem,
     SidebarMenuSub,
     SidebarMenuSubButton,
@@ -20,8 +21,7 @@ import {
     MessageCircleMore,
     SquareTerminal,
     Workflow,
-    Wrench,
-    type LucideIcon
+    Wrench
 } from "lucide-react"
 import React from "react"
 import { Link } from "react-router"
@@ -101,25 +101,25 @@ const navs: NavGroup[] = [
 
 interface DashboardNavCollapsibleProps {
     defaultOpen?: boolean
-    children?: React.ReactNode
     title: string
     tooltip?: string
     url: string
-    icon: LucideIcon | React.ComponentType
+    icon?: React.ComponentType
     items?: NavSubItem[]
 }
 
 function DashboardNavCollapsible({
-    children,
     defaultOpen = false,
     title,
     tooltip,
     url,
-    icon,
+    icon: Icon,
     items
 }: DashboardNavCollapsibleProps) {
 
     const [isOpen, setIsOpen] = useLocalStorage(`dashboard-nav-collapsible-${url}`, defaultOpen)
+
+    const handleOpen = () => setIsOpen(!isOpen)
 
     return (
         <Collapsible
@@ -130,8 +130,11 @@ function DashboardNavCollapsible({
         >
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                    <SidebarMenuNavButton title={title} tooltip={tooltip} icon={icon} url={url}>
-                        {children}
+                    <SidebarMenuNavButton title={title} tooltip={tooltip} asChild>
+                        <Link to={url}>
+                            {Icon && <Icon />}
+                            <span className="ml-2">{title}</span>
+                        </Link>
                     </SidebarMenuNavButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -140,13 +143,17 @@ function DashboardNavCollapsible({
                             <SidebarMenuSubItem key={subItem.title}>
                                 <SidebarMenuSubButton asChild>
                                     <Link to={subItem.url}>
-                                        <span>{subItem.title}</span>
+                                        <span className="ml-3">{subItem.title}</span>
                                     </Link>
                                 </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                         ))}
                     </SidebarMenuSub>
                 </CollapsibleContent>
+                <SidebarMenuAction onClick={handleOpen}>
+                    <ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    <span className="sr-only">{title}</span>
+                </SidebarMenuAction>
             </SidebarMenuItem>
         </Collapsible>
     )
@@ -160,31 +167,21 @@ export function DashboardNav() {
                     <SidebarMenuNavButton
                         title="Chat"
                         tooltip="Chat"
-                        icon={MessageCircleMore}
-                        url="/chat"
+                        asChild
                     >
-                        <span>Chat with AI</span>
+                        <Link to="/chat">
+                            <MessageCircleMore />
+                            <span className="ml-2 transition-opacity duration-200 ease-linear group-data-[collapsible=icon]:opacity-0">Chat with AI</span>
+                        </Link>
                     </SidebarMenuNavButton>
                 </SidebarMenu>
             </SidebarGroup>
-            {navs.map((nav) => (
-                <SidebarGroup key={nav.label}>
-                    <SidebarGroupLabel>{nav.label}</SidebarGroupLabel>
+            {navs.map((nav, key) => (
+                <SidebarGroup key={key}>
+                    <SidebarGroupLabel className="transition-opacity duration-200 ease-linear group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:mt-0">{nav.label}</SidebarGroupLabel>
                     <SidebarMenu>
                         {nav.items.map((item) => (
-                            <DashboardNavCollapsible
-                                key={item.title}
-                                title={item.title}
-                                tooltip={item.title}
-                                icon={item.icon}
-                                url={item.url}
-                                items={item.items}
-                            >
-                                <div className="flex items-center justify-between">
-                                    <span>{item.title}</span>
-                                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                </div>
-                            </DashboardNavCollapsible>
+                            <DashboardNavCollapsible key={item.title} {...item} />
                         ))}
                     </SidebarMenu>
                 </SidebarGroup>

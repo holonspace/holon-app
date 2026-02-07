@@ -18,13 +18,14 @@ import {
     SidebarTrigger
 } from "@/components/ui/sidebar"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useLocalStorage } from "@uidotdev/usehooks"
 import {
     ArrowUp,
     ArrowUpRight,
     BadgeCheck,
     Bell,
     CreditCard,
-    Link,
+    LinkIcon,
     LogOut,
     MoreHorizontal,
     PanelLeftIcon,
@@ -36,8 +37,10 @@ import {
     Trash2
 } from "lucide-react"
 import { useRef, useState } from "react"
+import { Link } from "react-router"
 
 export function ChatSidebar(props: React.ComponentProps<typeof SidebarInset>) {
+    const [open, setOpen] = useLocalStorage('dashboard-sidebar-open', true)
     const [showTop, setShowTop] = useState(false)
     const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -58,7 +61,7 @@ export function ChatSidebar(props: React.ComponentProps<typeof SidebarInset>) {
     }
 
     return (
-        <SidebarProvider sidebarWidthIcon="3.25rem">
+        <SidebarProvider sidebarWidthIcon="3.25rem" open={open} onOpenChange={setOpen}>
             <div className="fixed top-0 left-0 h-14 z-50 flex items-center justify-center">
                 <SidebarTrigger className='mx-2 size-9' >
                     <PanelLeftIcon className="size-5" />
@@ -128,8 +131,11 @@ function ChatSidebarNav() {
             <SidebarMenu>
                 {navs.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                        <SidebarMenuNavButton title={item.title} icon={item.icon}>
-                            {item.title}
+                        <SidebarMenuNavButton title={item.title} asChild>
+                            <Link to="#">
+                                {item.icon && <item.icon />}
+                                <span className="ml-2 transition-opacity duration-200 ease-linear group-data-[collapsible=icon]:opacity-0">{item.title}</span>
+                            </Link>
                         </SidebarMenuNavButton>
                     </SidebarMenuItem>
                 ))}
@@ -146,10 +152,10 @@ function ChatButton({ id }: ChatButtonProps) {
     const isMobile = useIsMobile()
     return (
         <SidebarMenuItem>
-            <SidebarMenuButton asChild collapsedStyle="hidden" className="transition-all group-data-[collapsible=icon]:opacity-0 duration-200">
-                <a href={`#${id}`}>
+            <SidebarMenuButton asChild className="transition-all group-data-[collapsible=icon]:opacity-0 duration-200 ease-linear">
+                <Link to={`#${id}`}>
                     <span className="truncate line-clamp-1">{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}{id}</span>
-                </a>
+                </Link>
             </SidebarMenuButton>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -169,7 +175,7 @@ function ChatButton({ id }: ChatButtonProps) {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                        <Link className="text-muted-foreground" />
+                        <LinkIcon className="text-muted-foreground" />
                         <span>Copy Link</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem>

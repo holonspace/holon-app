@@ -1,47 +1,15 @@
-import {
-    SidebarMenuButton
-} from "@/components/ui/sidebar"
+
+import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { Link } from "react-router"
+import React from "react"
 
-
-type Icon = React.ComponentType<{ className?: string }>
-
-export function SidebarMenuIcon({
-    icon: Icon,
-    className,
-    ...props
-}: React.ComponentProps<"svg"> & { icon: Icon }) {
+function SidebarMenuNavButton({ children, className, ...props }: React.ComponentProps<typeof SidebarMenuButton>) {
     return (
-        <Icon className={cn("size-5!", className)} {...props} />
-    )
-}
-
-interface SidebarNavButtonProps extends React.ComponentProps<typeof SidebarMenuButton> {
-    title?: string
-    url?: string
-    icon: Icon
-    children?: React.ReactNode
-    spanClassName?: string
-}
-
-export function SidebarMenuNavButton({
-    children,
-    icon: Icon,
-    className,
-    collapsedStyle = 'hidden',
-    url,
-    ...props
-}: SidebarNavButtonProps) {
-    const content = (
-        <>
-            <Icon className="size-5!" />
-            <div className="flex-1 transition-all group-data-[collapsible=icon]:opacity-0 duration-200 ml-2">{children}</div>
-        </>
-    )
-    return (
-        <SidebarMenuButton asChild={!!url} collapsedStyle={collapsedStyle} className={cn("h-9 cursor-pointer", className)} {...props}>
-            {url ? <Link to={url}>{content}</Link> : content}
+        <SidebarMenuButton className={cn("h-9 cursor-pointer [&>svg]:size-5 group-data-[collapsible=icon]:size-9", className)} {...props}>
+            {children}
         </SidebarMenuButton>
     )
 }
+
+export { SidebarMenuNavButton }
+

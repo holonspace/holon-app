@@ -9,6 +9,7 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { useLocalStorage } from "@uidotdev/usehooks"
 import { ChevronsUpDown } from "lucide-react"
 import React from "react"
 import { Link, useLocation } from "react-router"
@@ -19,11 +20,12 @@ interface DashboardSidebarProps {
 }
 
 export function DashboardSidebar({ children }: DashboardSidebarProps) {
+    const [open, setOpen] = useLocalStorage('dashboard-sidebar-open', true)
     const location = useLocation()
     const pathnames = location.pathname.split('/').filter((x) => x)
     return (
-        <SidebarProvider sidebarWidthIcon="2rem" >
-            <Sidebar collapsible="icon" variant="inset" className="p-0!">
+        <SidebarProvider open={open} onOpenChange={setOpen} >
+            <Sidebar collapsible="icon" variant="inset" className="p-0">
                 <SidebarHeader />
                 <SidebarContent>
                     <DashboardNav />
