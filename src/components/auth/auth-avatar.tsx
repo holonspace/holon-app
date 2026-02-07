@@ -1,4 +1,4 @@
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/lib/auth"
 
 export function AuthAvatarImage(props: React.ComponentProps<typeof AvatarImage>) {
@@ -15,5 +15,14 @@ export function AuthAvatarFallback(props: React.ComponentProps<typeof AvatarFall
         <AvatarFallback {...props}>
             {session?.user?.name?.slice(0, 2).toUpperCase() ?? ""}
         </AvatarFallback>
+    )
+}
+
+export function AuthAvatar(props: React.ComponentProps<typeof Avatar>) {
+    return (
+        <Avatar {...props}>
+            <AuthAvatarImage />
+            <AuthAvatarFallback />
+        </Avatar>
     )
 }

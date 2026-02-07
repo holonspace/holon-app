@@ -1,6 +1,6 @@
 import { otpSchema, SubmitButton, type OtpFormData } from "@/components/auth/form"
 import { useOTP } from "@/components/auth/form/hook"
-import { Loading } from "@/components/loading"
+import { CircleLoading } from "@/components/loading"
 import { Button } from "@/components/ui/button"
 import {
     Field,
@@ -25,12 +25,13 @@ import { LoaderCircle, Pencil } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { mergeRefs } from "react-merge-refs"
-import { useSearchParams } from "wouter"
+import { useSearchParams } from "react-router"
+
 
 export function OTPForm() {
 
     const otpRef = useRef<HTMLInputElement>(null)
-    
+
     const { setLocation } = useNavigate()
     const [searchParams] = useSearchParams()
     const email = searchParams.get("email")
@@ -157,7 +158,7 @@ export function OTPForm() {
                         </form >
                     </div >
                     :
-                    <Loading />
+                    <CircleLoading />
             }
         </>
     )

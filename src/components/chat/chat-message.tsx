@@ -58,7 +58,7 @@ function ChatHumanMessage({ content }: ChatItemMessageProps) {
                 )}
                 <Card className="w-[70%] relative">
                     <div className="absolute top-0 right-0 size-3 bg-primary [clip-path:polygon(100%_0,0_0,100%_100%)] " />
-                    <CardContent className="text-base text-foreground/80 font-normal">
+                    <CardContent className="text-base text-foreground font-normal">
                         <div
                             ref={contentRef}
                             className={cn(
@@ -82,7 +82,7 @@ function ChatHumanMessage({ content }: ChatItemMessageProps) {
 function ChatAIMessage({ content }: ChatItemMessageProps) {
     return (
         <div className="flex flex-col gap-2">
-            <div className="prose prose-sm dark:prose-invert max-w-none text-foreground/80">
+            <div className="prose prose-sm dark:prose-invert max-w-none">
                 <Streamdown
                     caret="block"
                     isAnimating={true}

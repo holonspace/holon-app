@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { useLocation } from "wouter"
+
 
 type NavigateParams = {
     path?: string
@@ -7,13 +7,15 @@ type NavigateParams = {
 }
 
 export const useNavigate = () => {
-    const [location, setLocation] = useLocation()
+    // const [location, setLocation] = useLocation()
+
+    const setLocation: any = () => { }
 
     const navigateTo = useCallback(
         ({ path = "", params = {} }: NavigateParams) => {
             const query = new URLSearchParams(params).toString()
             const url = query ? `${path}?${query}` : path
-            setLocation(url)
+            // setLocation(url)
         },
         [setLocation]
     )

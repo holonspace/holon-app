@@ -1,11 +1,11 @@
-import { AuthMenu } from "@/components/auth"
+import { AuthAvatar, AuthMenu } from "@/components/auth"
 import { ChatForm, ChatMessage, ChatModelSelector } from "@/components/chat"
 import { ChatSidebar } from "@/components/chat/chat-sidebar"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/lib/auth"
 import "@/styles/streamdown.css"
 import { LayoutDashboard } from "lucide-react"
-import { Link } from "wouter"
+import { Link } from "react-router"
 import myDoc from './witty-cooking-wreath.md?raw'
 
 export default function ChatPage() {
@@ -32,6 +32,7 @@ export default function ChatPage() {
     )
 }
 
+
 function MenuButton(props: React.ComponentProps<typeof Button>) {
     return (
         <Button variant="ghost" className="h-10 text-muted-foreground" {...props} />
@@ -55,7 +56,11 @@ function RightSideMenu() {
                     Dashboard
                 </MenuButton>
             </Link>
-            <AuthMenu />
+            <AuthMenu>
+                <Button variant="ghost" size="icon" className="outline-none ring-0! rounded-full cursor-pointer">
+                    <AuthAvatar />
+                </Button>
+            </AuthMenu>
         </div>
     )
 }

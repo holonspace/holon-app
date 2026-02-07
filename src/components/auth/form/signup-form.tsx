@@ -5,7 +5,7 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { Link } from "wouter"
+import { Link } from "react-router"
 
 
 export function SignUpForm() {
@@ -67,7 +67,7 @@ export function SignUpForm() {
                 <Separator />
                 <OAuth2Field />
                 <FieldDescription className="text-center">
-                    {t("signup.hasAccount")} <Link href="/auth/signin">{t("signup.signInLink")}</Link>
+                    {t("signup.hasAccount")} <Link to="/auth/signin">{t("signup.signInLink")}</Link>
                 </FieldDescription>
             </FieldGroup>
         </form>

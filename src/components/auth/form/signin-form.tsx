@@ -2,7 +2,8 @@ import { CredentialStep, EmailStep } from "@/components/auth/form/steps"
 import type { Step } from "@/components/auth/form/types"
 import { FieldGroup } from "@/components/ui/field"
 import { useTranslation } from "react-i18next"
-import { useSearchParams } from "wouter"
+import { useSearchParams } from "react-router"
+
 
 
 

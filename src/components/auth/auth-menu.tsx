@@ -4,7 +4,6 @@ import { AuthAvatarFallback, AuthAvatarImage } from '@/components/auth/auth-avat
 import {
     Avatar
 } from "@/components/ui/avatar"
-import { Button } from '@/components/ui/button'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,19 +22,15 @@ import {
     Sparkles
 } from "lucide-react"
 
+interface AuthMenuProps extends React.ComponentProps<typeof DropdownMenu> {
+}
 
-
-export function AuthMenu() {
+export function AuthMenu({ children, ...props }: AuthMenuProps) {
     const { session, signOut } = useAuth()
     return (
-        <DropdownMenu>
+        <DropdownMenu {...props}>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="outline-none ring-0! rounded-full cursor-pointer">
-                    <Avatar>
-                        <AuthAvatarImage />
-                        <AuthAvatarFallback />
-                    </Avatar>
-                </Button>
+                {children}
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 className="w-(--radix-dropdown-menu-trigger-width) min-w-56 "

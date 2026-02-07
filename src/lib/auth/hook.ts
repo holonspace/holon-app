@@ -14,7 +14,6 @@ interface UseAuthResult {
 
 export const useAuth = (): UseAuthResult => {
     const { data: session, isPending } = authClient.useSession()
-
     const status = useMemo(() => {
         if (isPending) return "loading"
         if (session) return "authenticated"

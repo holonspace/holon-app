@@ -1,3 +1,4 @@
+import { SidebarMenuNavButton } from "@/components/sidebar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -25,7 +26,6 @@ import {
     CreditCard,
     Link,
     LogOut,
-    MessagesSquare,
     MoreHorizontal,
     PanelLeftIcon,
     Search,
@@ -38,7 +38,7 @@ import {
 import { useRef, useState } from "react"
 
 export function ChatSidebar(props: React.ComponentProps<typeof SidebarInset>) {
-    const [showTop, setShowTop] = useState(true)
+    const [showTop, setShowTop] = useState(false)
     const scrollRef = useRef<HTMLDivElement>(null)
 
     // 監聽滾動事件
@@ -60,11 +60,11 @@ export function ChatSidebar(props: React.ComponentProps<typeof SidebarInset>) {
     return (
         <SidebarProvider sidebarWidthIcon="3.25rem">
             <div className="fixed top-0 left-0 h-14 z-50 flex items-center justify-center">
-                <SidebarTrigger className='mx-2 size-9 text-foreground/80' >
+                <SidebarTrigger className='mx-2 size-9' >
                     <PanelLeftIcon className="size-5" />
                 </SidebarTrigger>
             </div>
-            <Sidebar collapsible="icon" className="text-foreground/80">
+            <Sidebar collapsible="icon">
                 <SidebarContent className="mt-14">
                     <ChatSidebarNav />
                     <SidebarGroup className="flex-1 min-h-0 flex flex-col p-0">
@@ -128,22 +128,11 @@ function ChatSidebarNav() {
             <SidebarMenu>
                 {navs.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton asChild collapsedStyle='hidden' className="h-9">
-                            <a href={item.url}>
-                                <item.icon className="size-5!" />
-                                <span className="transition-all group-data-[collapsible=icon]:opacity-0 duration-200 ml-2">{item.title}</span>
-                            </a>
-                        </SidebarMenuButton>
+                        <SidebarMenuNavButton title={item.title} icon={item.icon}>
+                            {item.title}
+                        </SidebarMenuNavButton>
                     </SidebarMenuItem>
                 ))}
-                <SidebarMenuItem>
-                    <SidebarMenuButton
-                        collapsedStyle='hidden'
-                        className="max-w-0 max-h-0 size-9 overflow-hidden opacity-0 p-0 transition-opacity duration-200 group-data-[collapsible=icon]:max-w-9 group-data-[collapsible=icon]:max-h-9 group-data-[collapsible=icon]:opacity-100 group-data-[collapsible=icon]:p-2"
-                    >
-                        <MessagesSquare className="size-5!" />
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
             </SidebarMenu>
         </SidebarGroup>
     )
